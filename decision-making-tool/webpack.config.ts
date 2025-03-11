@@ -1,3 +1,5 @@
+import 'webpack-dev-server';
+
 import path from 'node:path';
 
 import EslintPlugin from 'eslint-webpack-plugin';
@@ -5,14 +7,20 @@ import HtmlWebpackPlugin from 'html-webpack-plugin';
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 import StylelintPlugin from 'stylelint-webpack-plugin';
 import { TsconfigPathsPlugin } from 'tsconfig-paths-webpack-plugin';
-import type webpack from 'webpack';
+import webpack from 'webpack';
 
-const dirname = import.meta.dirname;
+const BASE_PATH = '/alexandermisyura-JSFE2024Q4/decision-making-tool/';
+const { dirname } = import.meta;
 
 const config = (isDevelopment: boolean): webpack.Configuration => ({
   entry: path.resolve(import.meta.dirname, './src/index.ts'),
   devtool: 'source-map',
   mode: isDevelopment ? 'development' : 'production',
+
+  devServer: {
+    historyApiFallback: true,
+    client: { overlay: { warnings: false } },
+  },
 
   optimization: {
     minimize: false,
@@ -94,6 +102,7 @@ const config = (isDevelopment: boolean): webpack.Configuration => ({
     new MiniCssExtractPlugin({ filename: '[name].[contenthash].css' }),
     new EslintPlugin({ configType: 'flat', extensions: 'ts' }),
     new StylelintPlugin(),
+    new webpack.DefinePlugin({ BASE_PATH: JSON.stringify(isDevelopment ? '/' : BASE_PATH) }),
   ],
 });
 
