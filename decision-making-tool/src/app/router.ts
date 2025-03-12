@@ -1,6 +1,5 @@
+import machine from '@state-machine/machine';
 import type { RouteObject } from '@ts-types/route-object';
-
-import machine from './state-machine/machine';
 
 function getCurrentHref(): string {
   return globalThis.location.href;

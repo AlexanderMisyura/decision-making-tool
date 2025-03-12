@@ -1,9 +1,9 @@
 import './styles/global.scss';
 
 import Page from '@components/page/page';
+import machine from '@state-machine/machine';
 
 import Router from './router';
-import machine from './state-machine/machine';
 
 const ROUTES = [
   { pathname: '/', machineTrigger: 'navigateOptionsList' },

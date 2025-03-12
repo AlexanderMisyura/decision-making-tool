@@ -1,9 +1,9 @@
+import LocalStorageService from '@services/local-storage.service';
 import type { Option, Preferences, StorageData } from '@ts-types/index';
 import parseOptionsList from '@utils/parse-options-list';
 import parsePreferences from '@utils/parse-preferences';
 
 import config from './config';
-import LocalStorageService from './services/local-storage.service';
 
 const { STORAGE_PREFIX } = config;
 

@@ -3,8 +3,8 @@ import ErrorPage from '@components/error-page/error-page';
 import OptionsList from '@components/options-list/options-list';
 import Picker from '@components/picker/picker';
 import tag from '@components/utility-components';
+import type { StateMachine } from '@state-machine/machine-class';
 import type Router from 'src/app/router';
-import type { StateMachine } from 'src/app/state-machine/machine-class';
 
 import * as styles from './page.module.scss';
 
