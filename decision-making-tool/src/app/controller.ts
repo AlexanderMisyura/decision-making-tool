@@ -10,8 +10,6 @@ const { STORAGE_PREFIX } = config;
 class Controller {
   private storage: LocalStorageService<StorageData> = new LocalStorageService(STORAGE_PREFIX);
 
-  constructor() {}
-
   public getPreferences(): Preferences {
     return this.storage.getData('preferences', parsePreferences);
   }
