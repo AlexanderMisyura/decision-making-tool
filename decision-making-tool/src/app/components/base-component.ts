@@ -93,7 +93,7 @@ export default class BaseComponent<K extends keyof HTMLElementTagNameMap = 'div'
   public addListener(
     eventType: keyof DocumentEventMap,
     handler: EventListenerOrEventListenerObject,
-    options: AddEventListenerOptions
+    options?: AddEventListenerOptions
   ): this {
     this.element.addEventListener(eventType, handler, options);
 
