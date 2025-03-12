@@ -1,0 +1,11 @@
+.errorPage {
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+  align-items: center;
+  justify-content: center;
+
+  .link {
+    color: crimson;
+  }
+}
