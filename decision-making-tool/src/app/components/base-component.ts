@@ -49,10 +49,6 @@ export default class BaseComponent<K extends keyof HTMLElementTagNameMap = 'div'
     return this.element;
   }
 
-  /**
-   * Removes child components and the component itself.
-   * @returns {void}
-   */
   public removeSelf(): void {
     this.removeChildren();
     this.element.remove();

@@ -1,9 +1,6 @@
 import type { ComponentProperties } from './base-component';
 import BaseComponent from './base-component';
 
-/**
- * @template {HTMLElement} T
- */
 type UtilityTagProperties<K extends keyof HTMLElementTagNameMap = 'div'> = Omit<
   ComponentProperties<K>,
   'elementTag'
