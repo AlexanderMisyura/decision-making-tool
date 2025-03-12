@@ -1,0 +1,18 @@
+.page {
+  display: flex;
+  flex-direction: column;
+  gap: 5rem;
+  align-items: center;
+
+  min-block-size: 100dvh;
+}
+
+.heading {
+  padding-block-start: 1rem;
+  font-size: large;
+  color: coral;
+}
+
+.content {
+  flex-grow: 1;
+}
