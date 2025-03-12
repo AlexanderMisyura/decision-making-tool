@@ -1,5 +1,5 @@
 export type Option = {
-  id: string;
+  id: number;
   title: string;
   weight: number;
 };

@@ -18,7 +18,7 @@ export class StateMachine {
   public makeTransition(
     currentState: string,
     trigger: string,
-    contextData?: Context
+    contextData?: Partial<Context>
   ): string | void {
     const currentStateDefinition = this.definition.states[currentState];
     const destinationTransition = currentStateDefinition.transitions[trigger];

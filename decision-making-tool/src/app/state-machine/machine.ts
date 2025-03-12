@@ -6,6 +6,9 @@ const stateMachineDefinition: MachineDefinition = {
   initialState: 'state:initial',
   context: {
     currentRoute: '/',
+    durationMs: 10_000,
+    isSoundEnabled: false,
+    options: [],
   },
   states: {
     'state:initial': {
