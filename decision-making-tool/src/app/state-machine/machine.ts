@@ -1,5 +1,6 @@
 import type { MachineDefinition } from '@ts-types/index';
 
+import controller from '../controller';
 import { StateMachine } from './machine-class';
 
 const stateMachineDefinition: MachineDefinition = {
@@ -14,7 +15,16 @@ const stateMachineDefinition: MachineDefinition = {
     'state:initial': {
       actions: {
         onEnter() {},
-        onExit() {},
+        onExit(payload) {
+          const preferences = controller.getPreferences();
+          const optionsList = controller.getOptionsList();
+          if (payload) {
+            payload.updateContext({
+              isSoundEnabled: preferences.isSoundEnabled,
+              options: optionsList,
+            });
+          }
+        },
       },
       transitions: {
         navigateOptionsList: {
