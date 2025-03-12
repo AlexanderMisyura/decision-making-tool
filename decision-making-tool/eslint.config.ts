@@ -70,6 +70,13 @@ export default tseslint.config(
   },
 
   {
+    ignores: ['eslint.config.ts', 'webpack.config.ts'],
+    rules: {
+      'max-lines-per-function': ['error', { max: 40 }],
+    },
+  },
+
+  {
     rules: {
       'no-console': 'warn',
     },
