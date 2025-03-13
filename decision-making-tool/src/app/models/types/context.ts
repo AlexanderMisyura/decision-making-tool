@@ -5,4 +5,5 @@ export type Context = {
   durationMs: number;
   isSoundEnabled: boolean;
   options: Option[];
+  lastId: number;
 };

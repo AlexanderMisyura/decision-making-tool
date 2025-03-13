@@ -10,6 +10,7 @@ const stateMachineDefinition: MachineDefinition = {
     durationMs: 10_000,
     isSoundEnabled: false,
     options: [],
+    lastId: 1,
   },
   states: {
     'state:initial': {
@@ -17,11 +18,12 @@ const stateMachineDefinition: MachineDefinition = {
         onEnter() {},
         onExit(payload) {
           const preferences = controller.getPreferences();
-          const optionsList = controller.getOptionsList();
+          const [options, lastId] = controller.getOptions();
           if (payload) {
             payload.updateContext({
               isSoundEnabled: preferences.isSoundEnabled,
-              options: optionsList,
+              options,
+              lastId,
             });
           }
         },
@@ -103,10 +105,10 @@ const stateMachineDefinition: MachineDefinition = {
         addOption: {
           target: 'state:optionsList',
           action(payload) {
-            if (payload?.contextData?.options) {
+            if (payload?.contextData?.options && payload.contextData.lastId) {
               const { contextData, updateContext } = payload;
               updateContext(contextData);
-              controller.setOptionsList(payload.contextData.options);
+              controller.setOptions([payload.contextData.options, payload.contextData.lastId]);
             }
           },
         },
