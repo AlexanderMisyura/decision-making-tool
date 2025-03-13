@@ -11,10 +11,12 @@
 
   .title {
     flex-grow: 1;
+    min-inline-size: 5rem;
   }
 
   .weight {
     max-inline-size: 6rem;
+    padding-inline-end: 0.5rem;
   }
 
   .deleteBtn {

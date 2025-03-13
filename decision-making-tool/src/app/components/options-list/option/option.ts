@@ -32,7 +32,7 @@ export default class OptionItem extends BaseComponent<'li'> {
     });
 
     const deleteButton = tag.button({
-      text: 'delete',
+      text: 'Delete',
       classes: [styles.deleteBtn, 'button'],
       id: `#${id}-delete`,
       type: 'button',
