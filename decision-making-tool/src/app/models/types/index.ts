@@ -1,4 +1,5 @@
 export type { Context } from './context';
+export type { ControlsCallbacks } from './controls-callbacks';
 export type { MachineDefinition } from './machine-definition';
 export type { MachinePayload } from './machine-payload';
 export type { Option } from './option';
