@@ -7,8 +7,9 @@ export type ComponentProperties<K extends keyof HTMLElementTagNameMap = 'div'> =
 };
 
 export default class BaseComponent<K extends keyof HTMLElementTagNameMap = 'div'> {
+  public childComponents: BaseComponent<keyof HTMLElementTagNameMap>[] = [];
+  protected parentComponent: BaseComponent<keyof HTMLElementTagNameMap> | undefined = undefined;
   protected element: HTMLElementTagNameMap[K];
-  protected childComponents: BaseComponent<keyof HTMLElementTagNameMap>[] = [];
 
   constructor(
     properties: ComponentProperties<K>,
@@ -41,6 +42,7 @@ export default class BaseComponent<K extends keyof HTMLElementTagNameMap = 'div'
   public appendSingle(child: BaseComponent<keyof HTMLElementTagNameMap>): this {
     this.element.append(child.getElement());
     this.childComponents.push(child);
+    child.parentComponent = this;
 
     return this;
   }
@@ -52,6 +54,11 @@ export default class BaseComponent<K extends keyof HTMLElementTagNameMap = 'div'
   public removeSelf(): void {
     this.removeChildren();
     this.element.remove();
+    if (this.parentComponent) {
+      this.parentComponent.childComponents = this.parentComponent.childComponents.filter(
+        (child) => child !== this
+      );
+    }
   }
 
   public removeChildren(): this {
