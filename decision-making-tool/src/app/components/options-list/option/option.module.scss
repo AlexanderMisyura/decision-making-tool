@@ -1,0 +1,23 @@
+.option {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+
+  .label {
+    padding: 0.8rem;
+    border: 1px dashed olive;
+    border-radius: 10px;
+  }
+
+  .title {
+    flex-grow: 1;
+  }
+
+  .weight {
+    max-inline-size: 6rem;
+  }
+
+  .deleteBtn {
+    background-color: antiquewhite;
+  }
+}
