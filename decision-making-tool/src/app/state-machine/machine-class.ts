@@ -1,6 +1,6 @@
 import type { Context, MachineDefinition, MachinePayload } from '@ts-types/index';
 
-import Emitter from '../event-emitter';
+import Emitter from './event-emitter-machine';
 
 export class StateMachine {
   public value: MachineDefinition['initialState'];
@@ -39,7 +39,7 @@ export class StateMachine {
     destinationStateDefinition.actions.onEnter?.(payload);
 
     this.value = destinationState;
-    this.emit(this.events.machineStateChanged, this.context);
+    this.emit(this.events.machineStateChanged, payload);
 
     return this.value;
   }
@@ -48,11 +48,11 @@ export class StateMachine {
     this.context = { ...this.context, ...contextData };
   }
 
-  public on(event: string, callback: (...arguments_: unknown[]) => void): void {
+  public on(event: string, callback: (payload: MachinePayload, ...other: unknown[]) => void): void {
     this.emitter.on(event, callback);
   }
 
-  public emit(event: string, ...arguments_: unknown[]): void {
-    this.emitter.emit(event, ...arguments_);
+  public emit(event: string, payload: MachinePayload, ...other: unknown[]): void {
+    this.emitter.emit(event, payload, ...other);
   }
 }
