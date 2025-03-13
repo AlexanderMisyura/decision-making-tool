@@ -80,9 +80,35 @@ const stateMachineDefinition: MachineDefinition = {
             }
           },
         },
+        modifyOption: {
+          target: 'state:optionsList',
+          action(payload) {
+            if (payload?.contextData?.options) {
+              const { contextData, updateContext } = payload;
+              updateContext(contextData);
+              controller.setOptionsList(payload.contextData.options);
+            }
+          },
+        },
+        removeOption: {
+          target: 'state:optionsList',
+          action(payload) {
+            if (payload?.contextData?.options) {
+              const { contextData, updateContext } = payload;
+              updateContext(contextData);
+              controller.setOptionsList(payload.contextData.options);
+            }
+          },
+        },
         addOption: {
           target: 'state:optionsList',
-          action() {},
+          action(payload) {
+            if (payload?.contextData?.options) {
+              const { contextData, updateContext } = payload;
+              updateContext(contextData);
+              controller.setOptionsList(payload.contextData.options);
+            }
+          },
         },
         pasteList: {
           target: 'state:optionsList',

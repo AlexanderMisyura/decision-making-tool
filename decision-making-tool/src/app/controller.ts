@@ -17,6 +17,10 @@ class Controller {
   public getOptionsList(): Option[] {
     return this.storage.getData('optionsList', parseOptionsList);
   }
+
+  public setOptionsList(options: Option[]): void {
+    this.storage.saveData('optionsList', options);
+  }
 }
 
 export default new Controller();
