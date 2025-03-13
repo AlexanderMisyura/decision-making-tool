@@ -5,3 +5,27 @@
   margin: 0;
   padding: 0;
 }
+
+:root {
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.button,
+.input {
+  padding-block: 0.8rem;
+  padding-inline: 1rem;
+  border: 1px solid olive;
+  border-radius: 10px;
+
+  font-family: inherit;
+  font-size: 100%;
+}
+
+.button {
+  cursor: pointer;
+  background-color: ivory;
+}
+
+a {
+  text-decoration: none;
+}
