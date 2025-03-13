@@ -13,12 +13,13 @@ export default class Page extends BaseComponent<'main'> {
   private picker: Picker;
   private errorPage: ErrorPage;
   private content: BaseComponent;
+
   constructor(
     private machine: StateMachine,
     linkHandler: Router['handleLink']
   ) {
     super({ elementTag: 'main', classes: [styles.page] });
-    this.optionsList = new OptionsList(linkHandler);
+    this.optionsList = new OptionsList(machine, linkHandler);
     this.picker = new Picker(linkHandler);
     this.errorPage = new ErrorPage(linkHandler);
 
@@ -29,17 +30,20 @@ export default class Page extends BaseComponent<'main'> {
       this.content
     );
 
-    this.machine.on(this.machine.events.machineStateChanged, () => {
-      const { currentRoute } = this.machine.context;
-
-      if (currentRoute === '/') this.changeContent(this.optionsList);
-      else if (currentRoute === '/picker') this.changeContent(this.picker);
-      else this.changeContent(this.errorPage);
-    });
+    this.machine.on(this.machine.events.machineStateChanged, this.handleRouteChange.bind(this));
   }
 
   public mount(): void {
+    this.handleRouteChange();
     document.body.append(this.getElement());
+  }
+
+  private handleRouteChange(): void {
+    const { currentRoute } = this.machine.context;
+
+    if (currentRoute === '/') this.changeContent(this.optionsList);
+    else if (currentRoute === '/picker') this.changeContent(this.picker);
+    else this.changeContent(this.errorPage);
   }
 
   private changeContent(newContent: BaseComponent): void {

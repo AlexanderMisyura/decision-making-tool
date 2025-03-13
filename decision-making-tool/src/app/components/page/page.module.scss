@@ -1,18 +1,23 @@
 .page {
   display: flex;
   flex-direction: column;
-  gap: 5rem;
+  gap: 2rem;
   align-items: center;
 
   min-block-size: 100dvh;
 }
 
 .heading {
-  padding-block-start: 1rem;
-  font-size: large;
+  margin-block-start: 1rem;
+  font-size: 2rem;
   color: coral;
 }
 
 .content {
+  display: flex;
   flex-grow: 1;
+  align-items: center;
+  justify-content: center;
+
+  inline-size: 100%;
 }
