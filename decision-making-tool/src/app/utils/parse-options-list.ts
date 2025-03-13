@@ -2,7 +2,7 @@ import type { Option } from '@ts-types/index';
 
 import isOptionsListValid from './validation/option-list';
 
-const DEFAULT_OPTIONS_LIST: Option[] = [];
+const DEFAULT_OPTIONS_LIST: Option[] = [{ id: 1, title: '', weight: 0 }];
 
 export default function parseOptionsList(
   storedData: string | null,
