@@ -31,6 +31,7 @@ export class StateMachine {
     const payload: MachinePayload = {
       updateContext: this.updateContext.bind(this),
       contextData,
+      trigger,
     };
 
     destinationTransition.action?.(payload);
