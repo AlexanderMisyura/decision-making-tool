@@ -112,14 +112,6 @@ const stateMachineDefinition: MachineDefinition = {
             }
           },
         },
-        pasteList: {
-          target: 'state:optionsList',
-          action() {},
-        },
-        clearList: {
-          target: 'state:optionsList',
-          action() {},
-        },
         saveToFile: {
           target: 'state:optionsList',
           action() {},
