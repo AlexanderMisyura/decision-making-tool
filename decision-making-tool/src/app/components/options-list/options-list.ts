@@ -104,7 +104,9 @@ export default class OptionsList extends BaseComponent {
 
   private appendPasteList(partialOptions: PasteListOption[]): void {
     for (const partialOption of partialOptions) {
-      this.appendOption(partialOption);
+      setTimeout(() => {
+        this.appendOption(partialOption);
+      }, 0);
     }
   }
 
