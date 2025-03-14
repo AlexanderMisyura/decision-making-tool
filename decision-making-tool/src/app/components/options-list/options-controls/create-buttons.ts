@@ -36,11 +36,11 @@ export function createSaveButton(save: () => void): BaseComponent<'button'> {
   });
 }
 
-export function createLoadButton(/* load: ControlsCallbacks['load'] */): BaseComponent<'button'> {
+export function createLoadButton(load: () => void): BaseComponent<'button'> {
   return tag.button({
     classes: ['button', styles.loadBtn],
     text: 'Load List',
-    // onclick: load,
+    onclick: load,
   });
 }
 

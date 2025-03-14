@@ -25,7 +25,7 @@ export default class Controls extends BaseComponent {
     const pasteButton = createPasteButton(paste);
     const clearButton = createClearButton(clear);
     const saveButton = createSaveButton(this.saveOptions.bind(this));
-    const loadButton = createLoadButton();
+    const loadButton = createLoadButton(this.loadOptions.bind(this));
     const startButton = createStartButton(start);
 
     this.appendChildren(addButton, pasteButton, clearButton, saveButton, loadButton, startButton);
@@ -33,5 +33,9 @@ export default class Controls extends BaseComponent {
 
   private saveOptions(): void {
     this.machine.makeTransition(this.machine.value, 'saveToFile');
+  }
+
+  private loadOptions(): void {
+    this.machine.makeTransition(this.machine.value, 'loadFromFile');
   }
 }
