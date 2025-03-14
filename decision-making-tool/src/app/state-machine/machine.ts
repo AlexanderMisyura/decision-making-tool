@@ -114,7 +114,13 @@ const stateMachineDefinition: MachineDefinition = {
         },
         saveToFile: {
           target: 'state:optionsList',
-          action() {},
+          action(payload) {
+            if (payload?.getFullContext) {
+              const { getFullContext } = payload;
+              const context = getFullContext();
+              controller.saveToJSONFile(context.options, context.lastId);
+            }
+          },
         },
         loadFromFile: {
           target: 'state:optionsList',
