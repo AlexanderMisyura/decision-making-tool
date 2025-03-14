@@ -28,11 +28,11 @@ export function createClearButton(clear: ControlsCallbacks['clear']): BaseCompon
   });
 }
 
-export function createSaveButton(/* save: ControlsCallbacks['save'] */): BaseComponent<'button'> {
+export function createSaveButton(save: () => void): BaseComponent<'button'> {
   return tag.button({
     classes: ['button', styles.saveBtn],
     text: 'Save List',
-    // onclick: save,
+    onclick: save,
   });
 }
 

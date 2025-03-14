@@ -32,7 +32,7 @@ export default class OptionsList extends BaseComponent {
       start: linkHandler,
     };
 
-    const controls = new Controls(controlsCallbacks);
+    const controls = new Controls(this.machine, controlsCallbacks);
     this.appendChildren(this.list, controls);
 
     this.addListeners();
