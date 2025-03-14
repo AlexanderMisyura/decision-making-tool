@@ -1,3 +1,5 @@
+import FileService from '@services/file.service';
+import LoaderService from '@services/loader.service';
 import LocalStorageService from '@services/local-storage.service';
 import type { Option, Preferences, StorageData } from '@ts-types/index';
 import parseLastId from '@utils/parse-last-id';
@@ -6,13 +8,15 @@ import parsePreferences from '@utils/parse-preferences';
 
 import config from './config';
 
-const { STORAGE_PREFIX } = config;
+const { PREFIX } = config;
 
 class Controller {
-  private storage: LocalStorageService<StorageData> = new LocalStorageService(STORAGE_PREFIX);
+  private fileService: FileService = new FileService(PREFIX);
+  private loaderService: LoaderService = new LoaderService();
+  private storageService: LocalStorageService<StorageData> = new LocalStorageService(PREFIX);
 
   public getPreferences(): Preferences {
-    return this.storage.getData('preferences', parsePreferences);
+    return this.storageService.getData('preferences', parsePreferences);
   }
 
   public getOptions(): [Option[], number] {
@@ -25,19 +29,29 @@ class Controller {
   }
 
   public getOptionsList(): Option[] {
-    return this.storage.getData('optionsList', parseOptionsList);
+    return this.storageService.getData('optionsList', parseOptionsList);
   }
 
   public setOptionsList(options: Option[]): void {
-    this.storage.saveData('optionsList', options);
+    this.storageService.saveData('optionsList', options);
   }
 
   public getLastOptionId(): number {
-    return this.storage.getData('lastId', parseLastId);
+    return this.storageService.getData('lastId', parseLastId);
   }
 
   public setLastOptionId(id: number): void {
-    this.storage.saveData('lastId', id);
+    this.storageService.saveData('lastId', id);
+  }
+
+  public saveToJSONFile(options: Option[], lastId: number): void {
+    const extension = 'options.json';
+    const type = 'application/json';
+
+    const file = this.fileService.createFile(JSON.stringify({ options, lastId }), type, extension);
+    const url = URL.createObjectURL(file);
+
+    this.loaderService.loadFile(url, file.name);
   }
 }
 
