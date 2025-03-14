@@ -10,3 +10,12 @@ export default class FileService {
     return `${this.fileNamePrefix}_${key}`;
   }
 }
+
+export async function readFile<FileStructure>(
+  file: File,
+  parseFunction: (string: string) => FileStructure | void
+): Promise<void | FileStructure> {
+  const string = await file.text();
+
+  return parseFunction(string);
+}
