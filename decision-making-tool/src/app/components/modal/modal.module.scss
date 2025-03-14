@@ -1,0 +1,38 @@
+.modal {
+  inset-block-start: 50%;
+  inset-inline-start: 50%;
+  transform: translate(calc(-50% - 16px), -50%);
+
+  inline-size: 90dvw;
+  max-inline-size: 550px;
+  block-size: 60dvh;
+  max-block-size: 400px;
+  padding: 0;
+  border: 1px solid olive;
+  border-radius: 10px;
+
+  box-shadow: 0 4px 35px -1px rgb(0 0 0 / 41%);
+
+  &::backdrop {
+    background-color: rgb(255 255 240 / 20%);
+    backdrop-filter: blur(3px);
+  }
+
+  .content {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+
+    block-size: 100%;
+    padding-block: 2rem;
+    padding-inline: 2rem;
+    border-radius: 10px;
+
+    background-color: aliceblue;
+  }
+
+  .cancelBtn {
+    grid-area: cancel;
+    color: tomato;
+  }
+}
