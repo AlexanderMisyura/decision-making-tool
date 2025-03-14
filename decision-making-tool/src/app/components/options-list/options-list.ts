@@ -1,9 +1,11 @@
 import BaseComponent from '@components/base-component';
+import type Modal from '@components/modal/modal';
 import OptionItem from '@components/options-list/option/option';
 import Controls from '@components/options-list/options-controls/options-controls';
+import PasteList from '@components/pasteOption/paste-list';
 import tag from '@components/utility-components';
 import type { StateMachine } from '@state-machine/machine-class';
-import type { MachinePayload } from '@ts-types/index';
+import type { ControlsCallbacks, MachinePayload, PasteListOption } from '@ts-types/index';
 import type Router from 'src/app/router';
 
 import * as styles from './options-list.module.scss';
@@ -14,16 +16,23 @@ export default class OptionsList extends BaseComponent {
 
   constructor(
     private machine: StateMachine,
+    modalControls: Modal['modalControls'],
     linkHandler: Router['handleLink']
   ) {
     super({ elementTag: 'div', classes: [styles.mainBlock] });
 
     this.list = tag.ul({ classes: [styles.list] });
-    const controls = new Controls({
-      add: this.appendOption.bind(this),
+
+    const pasteList = new PasteList(modalControls, this.appendPasteList.bind(this));
+
+    const controlsCallbacks: ControlsCallbacks = {
+      add: () => this.appendOption.bind(this)(),
+      paste: (): void => modalControls.showModal(pasteList.createTextarea()),
       clear: this.clearOptionsList.bind(this),
       start: linkHandler,
-    });
+    };
+
+    const controls = new Controls(controlsCallbacks);
     this.appendChildren(this.list, controls);
 
     this.addListeners();
@@ -57,9 +66,11 @@ export default class OptionsList extends BaseComponent {
     }
   }
 
-  private appendOption(): void {
+  private appendOption(partialOption?: PasteListOption): void {
     if (this.list.childComponents.length === 0) this.lastId = 0;
-    const option = { id: ++this.lastId, title: '', weight: 0 };
+    const id = ++this.lastId;
+
+    const option = partialOption ? { id, ...partialOption } : { id, title: '', weight: 0 };
     const optionItem = new OptionItem(option);
 
     this.list.appendSingle(optionItem);
@@ -71,6 +82,12 @@ export default class OptionsList extends BaseComponent {
       options: [...options],
       lastId: this.lastId,
     });
+  }
+
+  private appendPasteList(partialOptions: PasteListOption[]): void {
+    for (const partialOption of partialOptions) {
+      this.appendOption(partialOption);
+    }
   }
 
   private handleInputsChange(event: Event): void {

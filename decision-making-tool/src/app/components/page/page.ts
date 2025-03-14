@@ -1,5 +1,6 @@
 import BaseComponent from '@components/base-component';
 import ErrorPage from '@components/error-page/error-page';
+import Modal from '@components/modal/modal';
 import OptionsList from '@components/options-list/options-list';
 import Picker from '@components/picker/picker';
 import tag from '@components/utility-components';
@@ -9,6 +10,7 @@ import type Router from 'src/app/router';
 import * as styles from './page.module.scss';
 
 export default class Page extends BaseComponent<'main'> {
+  private modal: Modal;
   private optionsList: OptionsList;
   private picker: Picker;
   private errorPage: ErrorPage;
@@ -19,7 +21,9 @@ export default class Page extends BaseComponent<'main'> {
     linkHandler: Router['handleLink']
   ) {
     super({ elementTag: 'main', classes: [styles.page] });
-    this.optionsList = new OptionsList(machine, linkHandler);
+
+    this.modal = new Modal();
+    this.optionsList = new OptionsList(machine, this.modal.modalControls, linkHandler);
     this.picker = new Picker(linkHandler);
     this.errorPage = new ErrorPage(linkHandler);
 
