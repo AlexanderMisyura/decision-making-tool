@@ -1,7 +1,8 @@
-import FileService from '@services/file.service';
+import FileService, { readFile } from '@services/file.service';
 import LoaderService from '@services/loader.service';
 import LocalStorageService from '@services/local-storage.service';
-import type { Option, Preferences, StorageData } from '@ts-types/index';
+import type { FileContent, Option, Preferences, StorageData } from '@ts-types/index';
+import parseFileString from '@utils/parse-file-string';
 import parseLastId from '@utils/parse-last-id';
 import parseOptionsList from '@utils/parse-options-list';
 import parsePreferences from '@utils/parse-preferences';
@@ -51,7 +52,17 @@ class Controller {
     const file = this.fileService.createFile(JSON.stringify({ options, lastId }), type, extension);
     const url = URL.createObjectURL(file);
 
-    this.loaderService.loadFile(url, file.name);
+    this.loaderService.downloadFile(url, file.name);
+  }
+
+  public async loadFromJSONFile(): Promise<void | FileContent> {
+    const file = await this.loaderService.uploadFile();
+
+    if (!file) return;
+
+    const result = await readFile(file, parseFileString);
+
+    if (result) return result;
   }
 }
 
