@@ -1,9 +1,5 @@
 export default class LocalStorageService<StorageDataType> {
-  private storagePrefix: string;
-
-  constructor(storagePrefix: string) {
-    this.storagePrefix = storagePrefix;
-  }
+  constructor(private storagePrefix: string) {}
 
   public saveData<Key extends keyof StorageDataType>(key: Key, data: StorageDataType[Key]): void {
     const storageKey = this.getStorageKey(key.toString());
