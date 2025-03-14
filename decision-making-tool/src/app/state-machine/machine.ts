@@ -131,6 +131,21 @@ const stateMachineDefinition: MachineDefinition = {
         },
         loadFromFile: {
           target: 'state:optionsList',
+          action(payload) {
+            void (async (): Promise<void> => {
+              const fileContent = await controller.loadFromJSONFile();
+
+              if (fileContent) {
+                const { updateContext } = payload;
+                updateContext({ options: fileContent.options, lastId: fileContent.lastId });
+                controller.setOptions([fileContent.options, fileContent.lastId]);
+                machine.makeTransition(machine.value, 'fileLoaded');
+              }
+            })();
+          },
+        },
+        fileLoaded: {
+          target: 'state:optionsList',
           action() {},
         },
       },

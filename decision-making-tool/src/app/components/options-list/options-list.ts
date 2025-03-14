@@ -48,7 +48,7 @@ export default class OptionsList extends BaseComponent {
   }
 
   private handleStateChange(payload: MachinePayload): void {
-    if (payload.trigger === 'navigateOptionsList') {
+    if (payload.trigger === 'navigateOptionsList' || payload.trigger === 'fileLoaded') {
       this.rerenderList();
     }
   }
