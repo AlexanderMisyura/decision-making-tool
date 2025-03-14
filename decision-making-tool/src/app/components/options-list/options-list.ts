@@ -95,7 +95,7 @@ export default class OptionsList extends BaseComponent {
 
     if (input instanceof HTMLInputElement) {
       const { options } = this.machine.context;
-      const id = Number(input.id.at(1));
+      const id = Number.parseInt(input.id.slice(1));
       const currentOption = options.find((option) => option.id === id);
 
       if (currentOption) {
