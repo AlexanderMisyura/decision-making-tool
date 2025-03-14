@@ -48,7 +48,7 @@ const stateMachineDefinition: MachineDefinition = {
           },
         },
         navigateError: {
-          target: 'state:picker',
+          target: 'state:404',
           action(payload) {
             if (payload?.contextData?.currentRoute) {
               const { contextData, updateContext } = payload;
