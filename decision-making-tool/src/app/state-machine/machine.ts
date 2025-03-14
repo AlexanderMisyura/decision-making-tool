@@ -101,6 +101,16 @@ const stateMachineDefinition: MachineDefinition = {
             }
           },
         },
+        clearList: {
+          target: 'state:optionsList',
+          action(payload) {
+            if (payload.contextData?.options && payload.contextData.lastId != undefined) {
+              const { contextData, updateContext } = payload;
+              updateContext(contextData);
+              controller.setOptions([payload.contextData.options, payload.contextData.lastId]);
+            }
+          },
+        },
         addOption: {
           target: 'state:optionsList',
           action(payload) {

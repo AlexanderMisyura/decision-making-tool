@@ -128,14 +128,18 @@ export default class OptionsList extends BaseComponent {
       const { options } = this.machine.context;
       const filteredOptions = options.filter((option) => option.id !== Number(id));
 
-      this.machine.makeTransition(this.machine.value, 'removeOption', {
-        options: [...filteredOptions],
-      });
+      if (this.list.childComponents.length > 0) {
+        this.machine.makeTransition(this.machine.value, 'removeOption', {
+          options: [...filteredOptions],
+        });
+      } else {
+        this.clearOptionsList();
+      }
     }
   }
 
   private clearOptionsList(): void {
     this.list.removeChildren();
-    this.machine.makeTransition(this.machine.value, 'removeOption', { options: [] });
+    this.machine.makeTransition(this.machine.value, 'clearList', { options: [], lastId: 0 });
   }
 }
