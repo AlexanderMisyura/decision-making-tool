@@ -19,20 +19,19 @@ const stateMachineDefinition: MachineDefinition = {
         onExit(payload) {
           const preferences = controller.getPreferences();
           const [options, lastId] = controller.getOptions();
-          if (payload) {
-            payload.updateContext({
-              isSoundEnabled: preferences.isSoundEnabled,
-              options,
-              lastId,
-            });
-          }
+
+          payload.updateContext({
+            isSoundEnabled: preferences.isSoundEnabled,
+            options,
+            lastId,
+          });
         },
       },
       transitions: {
         navigateOptionsList: {
           target: 'state:optionsList',
           action(payload) {
-            if (payload?.contextData?.currentRoute) {
+            if (payload.contextData?.currentRoute) {
               const { contextData, updateContext } = payload;
               updateContext(contextData);
             }
@@ -41,7 +40,7 @@ const stateMachineDefinition: MachineDefinition = {
         navigatePicker: {
           target: 'state:picker',
           action(payload) {
-            if (payload?.contextData?.currentRoute) {
+            if (payload.contextData?.currentRoute) {
               const { contextData, updateContext } = payload;
               updateContext(contextData);
             }
@@ -50,7 +49,7 @@ const stateMachineDefinition: MachineDefinition = {
         navigateError: {
           target: 'state:404',
           action(payload) {
-            if (payload?.contextData?.currentRoute) {
+            if (payload.contextData?.currentRoute) {
               const { contextData, updateContext } = payload;
               updateContext(contextData);
             }
@@ -67,7 +66,7 @@ const stateMachineDefinition: MachineDefinition = {
         navigatePicker: {
           target: 'state:picker',
           action(payload) {
-            if (payload?.contextData?.currentRoute) {
+            if (payload.contextData?.currentRoute) {
               const { contextData, updateContext } = payload;
               updateContext(contextData);
             }
@@ -76,7 +75,7 @@ const stateMachineDefinition: MachineDefinition = {
         navigateError: {
           target: 'state:picker',
           action(payload) {
-            if (payload?.contextData?.currentRoute) {
+            if (payload.contextData?.currentRoute) {
               const { contextData, updateContext } = payload;
               updateContext(contextData);
             }
@@ -85,7 +84,7 @@ const stateMachineDefinition: MachineDefinition = {
         modifyOption: {
           target: 'state:optionsList',
           action(payload) {
-            if (payload?.contextData?.options) {
+            if (payload.contextData?.options) {
               const { contextData, updateContext } = payload;
               updateContext(contextData);
               controller.setOptionsList(payload.contextData.options);
@@ -95,7 +94,7 @@ const stateMachineDefinition: MachineDefinition = {
         removeOption: {
           target: 'state:optionsList',
           action(payload) {
-            if (payload?.contextData?.options) {
+            if (payload.contextData?.options) {
               const { contextData, updateContext } = payload;
               updateContext(contextData);
               controller.setOptionsList(payload.contextData.options);
@@ -105,7 +104,7 @@ const stateMachineDefinition: MachineDefinition = {
         addOption: {
           target: 'state:optionsList',
           action(payload) {
-            if (payload?.contextData?.options && payload.contextData.lastId) {
+            if (payload.contextData?.options && payload.contextData.lastId) {
               const { contextData, updateContext } = payload;
               updateContext(contextData);
               controller.setOptions([payload.contextData.options, payload.contextData.lastId]);
@@ -115,11 +114,9 @@ const stateMachineDefinition: MachineDefinition = {
         saveToFile: {
           target: 'state:optionsList',
           action(payload) {
-            if (payload?.getFullContext) {
-              const { getFullContext } = payload;
-              const context = getFullContext();
-              controller.saveToJSONFile(context.options, context.lastId);
-            }
+            const { getFullContext } = payload;
+            const context = getFullContext();
+            controller.saveToJSONFile(context.options, context.lastId);
           },
         },
         loadFromFile: {
@@ -137,7 +134,7 @@ const stateMachineDefinition: MachineDefinition = {
         navigateOptionsList: {
           target: 'state:optionsList',
           action(payload) {
-            if (payload?.contextData?.currentRoute) {
+            if (payload.contextData?.currentRoute) {
               const { contextData, updateContext } = payload;
               updateContext(contextData);
             }
@@ -146,7 +143,7 @@ const stateMachineDefinition: MachineDefinition = {
         navigateError: {
           target: 'state:picker',
           action(payload) {
-            if (payload?.contextData?.currentRoute) {
+            if (payload.contextData?.currentRoute) {
               const { contextData, updateContext } = payload;
               updateContext(contextData);
             }
@@ -175,7 +172,7 @@ const stateMachineDefinition: MachineDefinition = {
         navigateOptionsList: {
           target: 'state:optionsList',
           action(payload) {
-            if (payload?.contextData?.currentRoute) {
+            if (payload.contextData?.currentRoute) {
               const { contextData, updateContext } = payload;
               updateContext(contextData);
             }
@@ -184,7 +181,7 @@ const stateMachineDefinition: MachineDefinition = {
         navigatePicker: {
           target: 'state:picker',
           action(payload) {
-            if (payload?.contextData?.currentRoute) {
+            if (payload.contextData?.currentRoute) {
               const { contextData, updateContext } = payload;
               updateContext(contextData);
             }
