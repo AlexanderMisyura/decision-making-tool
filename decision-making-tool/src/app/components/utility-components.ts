@@ -65,6 +65,9 @@ const li = (
   ...children: BaseComponent<keyof HTMLElementTagNameMap>[]
 ): BaseComponent<'li'> => new BaseComponent<'li'>({ ...properties, elementTag: 'li' }, ...children);
 
+const textarea = (properties: UtilityTagProperties<'textarea'>): BaseComponent<'textarea'> =>
+  new BaseComponent<'textarea'>({ ...properties, elementTag: 'textarea' });
+
 export default {
   span,
   div,
@@ -78,4 +81,5 @@ export default {
   summary,
   ul,
   li,
+  textarea,
 };
