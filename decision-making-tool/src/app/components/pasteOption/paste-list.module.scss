@@ -1,0 +1,27 @@
+.pasteList {
+  display: grid;
+  grid-template:
+    'text text' 1fr
+    'cancel confirm' auto;
+  gap: 1rem;
+
+  inline-size: 100%;
+  block-size: 100%;
+
+  .textarea {
+    resize: none;
+
+    grid-area: text;
+    flex-grow: 1;
+
+    padding: 1rem;
+    border-radius: 5px;
+
+    font-family: monospace;
+  }
+
+  .confirmBtn {
+    grid-area: confirm;
+    color: green;
+  }
+}
