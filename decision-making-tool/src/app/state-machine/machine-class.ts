@@ -30,6 +30,7 @@ export class StateMachine {
 
     const payload: MachinePayload = {
       updateContext: this.updateContext.bind(this),
+      getFullContext: this.getFullContext.bind(this),
       contextData,
       trigger,
     };
@@ -46,6 +47,10 @@ export class StateMachine {
 
   public updateContext(contextData: Partial<Context>): void {
     this.context = { ...this.context, ...contextData };
+  }
+
+  public getFullContext(): Context {
+    return this.context;
   }
 
   public on(event: string, callback: (payload: MachinePayload, ...other: unknown[]) => void): void {
