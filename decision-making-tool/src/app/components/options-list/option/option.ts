@@ -5,12 +5,14 @@ import type { Option } from '@ts-types/index';
 import * as styles from './option.module.scss';
 
 export default class OptionItem extends BaseComponent<'li'> {
+  public label: BaseComponent<'label'>;
+
   constructor(option: Option) {
     super({ elementTag: 'li', classes: [styles.option], id: `#${option.id}-option` });
 
     const { id, title, weight } = option;
 
-    const label = tag.label({ text: `#${id}`, htmlFor: `#${id}-title`, classes: [styles.label] });
+    this.label = tag.label({ text: `#${id}`, htmlFor: `#${id}-title`, classes: [styles.label] });
 
     const titleInput = tag.input({
       value: title || '',
@@ -39,6 +41,6 @@ export default class OptionItem extends BaseComponent<'li'> {
       name: 'delete option',
     });
 
-    this.appendChildren(label, titleInput, weightInput, deleteButton);
+    this.appendChildren(this.label, titleInput, weightInput, deleteButton);
   }
 }

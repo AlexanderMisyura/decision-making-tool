@@ -64,6 +64,22 @@ export default class OptionsList extends BaseComponent {
         this.list.appendSingle(optionItem);
       }
     }
+
+    this.fixOptionsIdColumn(this.list.childComponents.at(-1));
+  }
+
+  private fixOptionsIdColumn(
+    listLastChild: BaseComponent<keyof HTMLElementTagNameMap> | undefined
+  ): void {
+    if (listLastChild instanceof OptionItem) {
+      for (const option of this.list.childComponents) {
+        const width = listLastChild.label.getElement().offsetWidth;
+        if (option instanceof OptionItem) {
+          const optionWidth = option.label.getElement().offsetWidth;
+          if (optionWidth !== width) option.label.getElement().style.minWidth = `${width}px`;
+        }
+      }
+    }
   }
 
   private appendOption(partialOption?: PasteListOption): void {
@@ -74,6 +90,8 @@ export default class OptionsList extends BaseComponent {
     const optionItem = new OptionItem(option);
 
     this.list.appendSingle(optionItem);
+
+    this.fixOptionsIdColumn(optionItem);
 
     const { options } = this.machine.context;
     options.push(option);
