@@ -185,7 +185,13 @@ const stateMachineDefinition: MachineDefinition = {
         },
         changeDuration: {
           target: 'state:picker',
-          action() {},
+          action(payload) {
+            if (payload.contextData?.durationMs) {
+              const duration = payload.contextData.durationMs;
+              const validDurationMs = controller.sanitizeDuration(duration);
+              payload.updateContext({ durationMs: validDurationMs });
+            }
+          },
         },
       },
     },
