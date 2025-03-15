@@ -21,6 +21,13 @@ export default class Modal extends BaseComponent<'dialog'> {
     this.addListeners();
   }
 
+  public showModal(component: BaseComponent<keyof HTMLElementTagNameMap>): void {
+    this.createModal();
+    document.body.append(this.getElement());
+    if (this.content) this.content.getElement().replaceChildren(component.getElement());
+    this.element.showModal();
+  }
+
   private createModal(): void {
     this.content = tag.div({ classes: [styles.content] });
     this.appendSingle(this.content);
@@ -35,13 +42,6 @@ export default class Modal extends BaseComponent<'dialog'> {
       this.content?.removeSelf();
       this.getElement().remove();
     });
-  }
-
-  private showModal(component: BaseComponent<keyof HTMLElementTagNameMap>): void {
-    this.createModal();
-    document.body.append(this.getElement());
-    if (this.content) this.content.getElement().replaceChildren(component.getElement());
-    this.element.showModal();
   }
 
   private closeModal(event: Event): void {
