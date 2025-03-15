@@ -1,0 +1,22 @@
+.message {
+  display: grid;
+  grid-template: 'text' 1fr 'confirm' auto;
+  gap: 1rem;
+
+  inline-size: 100%;
+  block-size: 100%;
+
+  text-align: center;
+
+  .text {
+    padding: 1rem;
+    border: 1px dashed rgb(118 118 118);
+    border-radius: 10px;
+    background-color: whitesmoke;
+  }
+
+  .confirmBtn {
+    grid-area: confirm;
+    color: tomato;
+  }
+}
