@@ -31,6 +31,15 @@ export default class Router {
     this.load(currentPathname);
   }
 
+  public navigate(href: string): void {
+    const url = new URL(href);
+    globalThis.history.pushState({}, '', url);
+
+    const pathname = BASE_PATH ? url.pathname.replace(BASE_PATH, '/') : url.pathname;
+
+    this.load(pathname);
+  }
+
   private load(pathname: string): void {
     const currentRouteObject = this.getCurrentRouteObj(pathname);
 
@@ -46,14 +55,5 @@ export default class Router {
     if (!currentRouteObject) return;
 
     return currentRouteObject;
-  }
-
-  private navigate(href: string): void {
-    const url = new URL(href);
-    globalThis.history.pushState({}, '', url);
-
-    const pathname = BASE_PATH ? url.pathname.replace(BASE_PATH, '/') : url.pathname;
-
-    this.load(pathname);
   }
 }
