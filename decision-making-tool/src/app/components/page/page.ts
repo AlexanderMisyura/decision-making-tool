@@ -1,5 +1,6 @@
 import BaseComponent from '@components/base-component';
 import ErrorPage from '@components/error-page/error-page';
+import Message from '@components/message/message';
 import Modal from '@components/modal/modal';
 import OptionsList from '@components/options-list/options-list';
 import Picker from '@components/picker/picker';
@@ -40,6 +41,10 @@ export default class Page extends BaseComponent<'main'> {
   public mount(): void {
     this.handleRouteChange();
     document.body.append(this.getElement());
+  }
+
+  public showMessage(): void {
+    this.modal.showModal(new Message(this.modal.modalControls));
   }
 
   private handleRouteChange(): void {
