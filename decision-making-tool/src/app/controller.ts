@@ -7,12 +7,14 @@ import parseFileString from '@utils/parse-file-string';
 import parseLastId from '@utils/parse-last-id';
 import parseOptionsList from '@utils/parse-options-list';
 import parsePreferences from '@utils/parse-preferences';
+import sanitizeDuration from '@utils/validation/duration';
 
 import config from './config';
 
 const { PREFIX } = config;
 
 class Controller {
+  public sanitizeDuration: (duration: unknown) => number = sanitizeDuration;
   private fileService: FileService = new FileService(PREFIX);
   private loaderService: LoaderService = new LoaderService();
   private storageService: LocalStorageService<StorageData> = new LocalStorageService(PREFIX);
