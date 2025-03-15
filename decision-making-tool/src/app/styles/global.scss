@@ -29,7 +29,19 @@
 
 .button {
   cursor: pointer;
+  user-select: none;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
   background-color: ivory;
+
+  transition: filter 0.3s;
+
+  &:hover {
+    filter: brightness(95%);
+  }
 }
 
 a {
