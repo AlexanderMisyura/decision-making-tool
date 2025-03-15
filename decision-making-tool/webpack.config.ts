@@ -41,6 +41,13 @@ const config = (isDevelopment: boolean): webpack.Configuration => ({
   module: {
     rules: [
       {
+        test: /\.(?:wav|mp3)$/i,
+        type: 'asset/resource',
+        generator: {
+          filename: 'assets/audio/[hash][ext][query]',
+        },
+      },
+      {
         test: /\.(?:ico|gif|png|jpg|jpeg|svg)$/i,
         type: 'asset/resource',
         generator: {

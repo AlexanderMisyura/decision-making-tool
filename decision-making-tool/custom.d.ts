@@ -9,3 +9,8 @@ declare module '*.scss' {
 }
 
 declare const BASE_PATH: string;
+
+declare module '*.mp3' {
+  const source: string;
+  export default source;
+}
