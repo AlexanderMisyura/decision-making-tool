@@ -10,6 +10,7 @@ const stateMachineDefinition: MachineDefinition = {
     durationMs: 10_000,
     isSoundEnabled: false,
     options: [],
+    pickerList: [],
     lastId: 1,
   },
   states: {
