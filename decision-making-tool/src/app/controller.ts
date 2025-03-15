@@ -2,6 +2,7 @@ import FileService, { readFile } from '@services/file.service';
 import LoaderService from '@services/loader.service';
 import LocalStorageService from '@services/local-storage.service';
 import type { FileContent, Option, Preferences, StorageData } from '@ts-types/index';
+import filterPickerList from '@utils/filter-picker-list';
 import parseFileString from '@utils/parse-file-string';
 import parseLastId from '@utils/parse-last-id';
 import parseOptionsList from '@utils/parse-options-list';
@@ -63,6 +64,13 @@ class Controller {
     const result = await readFile(file, parseFileString);
 
     if (result) return result;
+  }
+
+  public getPickerList(): Option[] | void {
+    const optionsList = this.getOptionsList();
+    const pickerList = filterPickerList(optionsList);
+
+    if (pickerList.length > 1) return pickerList;
   }
 }
 
