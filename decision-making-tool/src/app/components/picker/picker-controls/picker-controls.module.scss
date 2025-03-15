@@ -1,0 +1,63 @@
+.controls {
+  display: grid;
+  grid-template:
+    'back duration duration sound' 1fr
+    'pick   pick     pick   pick' auto
+    / 1fr 1fr 1fr 1fr;
+  gap: 1rem 0.5rem;
+  inline-size: 300px;
+
+  .back {
+    grid-area: back;
+    color: palevioletred;
+    text-align: center;
+  }
+
+  .label {
+    user-select: none;
+
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    align-items: center;
+    justify-content: center;
+
+    text-align: center;
+
+    .text {
+      display: block;
+    }
+  }
+
+  .duration {
+    grid-area: duration;
+    place-self: center center;
+    max-inline-size: 6rem;
+
+    &Input {
+      max-inline-size: 4.5rem;
+      padding-inline-end: 0.5rem;
+    }
+  }
+
+  .sound {
+    grid-area: sound;
+    place-self: center center;
+    block-size: 100%;
+    background-color: antiquewhite;
+
+    .text {
+      line-height: 1.35;
+    }
+
+    &Input {
+      display: none;
+    }
+  }
+
+  .pick {
+    grid-area: pick;
+    font-weight: 600;
+    color: indigo;
+  }
+}
