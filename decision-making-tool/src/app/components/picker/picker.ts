@@ -1,18 +1,19 @@
 import BaseComponent from '@components/base-component';
-import tag from '@components/utility-components';
+import type { StateMachine } from '@state-machine/machine-class';
 import type Router from 'src/app/router';
 
 import * as styles from './picker.module.scss';
-export default class Picker extends BaseComponent {
-  constructor(linkHandler: Router['handleLink']) {
-    super({ elementTag: 'div' });
-    const backLink = tag.a({
-      text: 'Go back to Options List',
-      href: '../',
-      classes: [styles.temp],
-    });
-    backLink.addListener('click', linkHandler);
+import PickerControls from './picker-controls/picker-controls';
 
-    this.appendSingle(backLink);
+export default class Picker extends BaseComponent {
+  constructor(
+    private machine: StateMachine,
+    linkHandler: Router['handleLink']
+  ) {
+    super({ elementTag: 'div', classes: [styles.pickerBlock] });
+
+    const controls = new PickerControls(this.machine, linkHandler);
+
+    this.appendSingle(controls);
   }
 }
