@@ -35,3 +35,41 @@
 a {
   text-decoration: none;
 }
+
+dialog {
+  opacity: 0;
+  transition: all 0.5s;
+
+  transition-behavior: allow-discrete;
+
+  &::backdrop {
+    opacity: 0;
+    background-color: rgb(255 255 240 / 20%);
+    backdrop-filter: blur(0);
+    transition: all 0.5s allow-discrete;
+
+    @starting-style {
+      & {
+        backdrop-filter: blur(0);
+      }
+    }
+  }
+
+  &[open] {
+    opacity: 1;
+
+    &::backdrop {
+      opacity: 1;
+      backdrop-filter: blur(3px);
+
+      @starting-style {
+        opacity: 0;
+        backdrop-filter: blur(0);
+      }
+    }
+
+    @starting-style {
+      opacity: 0;
+    }
+  }
+}
