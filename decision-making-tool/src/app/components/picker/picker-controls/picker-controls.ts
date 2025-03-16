@@ -2,11 +2,12 @@ import AudioController from '@components/audioComponent/audio-controller';
 import BaseComponent from '@components/base-component';
 import tag from '@components/utility-components';
 import type { StateMachine } from '@state-machine/machine-class';
+import type { MachinePayload } from '@ts-types/index';
 import type Router from 'src/app/router';
 
 import * as styles from './picker-controls.module.scss';
 
-const SOUND_MUTE = { ON: 'Mute ON', OFF: 'Mute OFF' } as const;
+const SOUND = { ON: 'Sound ON', OFF: 'Sound OFF' } as const;
 
 export default class PickerControls extends BaseComponent {
   private audioController: AudioController;
@@ -26,12 +27,12 @@ export default class PickerControls extends BaseComponent {
 
     this.soundCheckBox = tag.input({
       type: 'checkbox',
-      checked: true,
+      checked: false,
       classes: [styles.soundInput, 'input'],
-      onchange: () => this.handleMute(this.audioController.toggleMute.bind(this.audioController)),
+      onchange: this.handleSound.bind(this),
     });
 
-    this.soundText = tag.span({ text: SOUND_MUTE.ON, classes: [styles.text] });
+    this.soundText = tag.span({ text: SOUND.OFF, classes: [styles.text] });
 
     const soundLabel = tag.label(
       { classes: [styles.sound, styles.label, 'button'] },
@@ -45,6 +46,17 @@ export default class PickerControls extends BaseComponent {
     });
 
     this.appendChildren(soundLabel, this.pickButton);
+    this.machine.on(this.machine.events.machineStateChanged, this.handleStateChange.bind(this));
+  }
+
+  private handleStateChange(payload: MachinePayload): void {
+    if (payload.trigger === 'navigatePicker') {
+      const { isSoundEnabled } = this.machine.context;
+
+      this.soundCheckBox.getElement().checked = isSoundEnabled;
+      this.soundText.setText(isSoundEnabled ? SOUND.ON : SOUND.OFF);
+      this.audioController.toggleMute(isSoundEnabled);
+    }
   }
 
   private handleDurationChange(event: Event): void {
@@ -59,10 +71,13 @@ export default class PickerControls extends BaseComponent {
     }
   }
 
-  private handleMute(muteHandler: AudioController['toggleMute']): void {
-    const isMuted = this.soundCheckBox.getElement().checked;
-    this.soundText.setText(isMuted ? SOUND_MUTE.ON : SOUND_MUTE.OFF);
-    muteHandler(isMuted);
+  private handleSound(): void {
+    const isSoundEnabled = this.soundCheckBox.getElement().checked;
+    this.soundText.setText(isSoundEnabled ? SOUND.ON : SOUND.OFF);
+    this.audioController.toggleMute(isSoundEnabled);
+    void this.audioController.play('invitation');
+
+    this.machine.makeTransition(this.machine.value, 'toggleSound', { isSoundEnabled });
   }
 
   private createControls(linkHandler: Router['handleLink']): void {
