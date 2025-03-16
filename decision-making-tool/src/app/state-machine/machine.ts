@@ -189,7 +189,7 @@ const stateMachineDefinition: MachineDefinition = {
           target: 'state:picker',
           action() {},
         },
-        pick: {
+        endPick: {
           target: 'state:picker',
           action() {},
         },

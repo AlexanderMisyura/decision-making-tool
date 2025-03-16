@@ -14,6 +14,8 @@ export default class PickerControls extends BaseComponent {
   private soundText: BaseComponent<'span'>;
   private soundCheckBox: BaseComponent<'input'>;
   private pickButton: BaseComponent<'button'>;
+  private back: BaseComponent<'a'> | undefined;
+  private durationInput: BaseComponent<'input'> | undefined;
 
   constructor(
     private machine: StateMachine,
@@ -43,10 +45,43 @@ export default class PickerControls extends BaseComponent {
     this.pickButton = tag.button({
       text: 'Pick',
       classes: [styles.pick, 'button'],
+      onclick: this.startPick.bind(this),
     });
 
     this.appendChildren(soundLabel, this.pickButton);
     this.machine.on(this.machine.events.machineStateChanged, this.handleStateChange.bind(this));
+  }
+
+  private startPick(): void {
+    this.disableControls();
+    this.machine.makeTransition(this.machine.value, 'pick');
+
+    const durationMs = this.machine.context.durationMs;
+
+    setTimeout(() => {
+      this.enableControls();
+      this.machine.makeTransition(this.machine.value, 'endPick');
+    }, durationMs);
+  }
+
+  private disableControls(): void {
+    this.pickButton.getElement().disabled = true;
+    this.soundCheckBox.getElement().disabled = true;
+    if (this.back && this.durationInput) {
+      this.back.getElement().classList.add(styles.backDisabled);
+      this.back.getElement().href = '';
+      this.durationInput.getElement().disabled = true;
+    }
+  }
+
+  private enableControls(): void {
+    this.pickButton.getElement().disabled = false;
+    this.soundCheckBox.getElement().disabled = false;
+    if (this.back && this.durationInput) {
+      this.back.getElement().classList.remove(styles.backDisabled);
+      this.back.getElement().href = '../';
+      this.durationInput.getElement().disabled = false;
+    }
   }
 
   private handleStateChange(payload: MachinePayload): void {
@@ -81,14 +116,14 @@ export default class PickerControls extends BaseComponent {
   }
 
   private createControls(linkHandler: Router['handleLink']): void {
-    const back = tag.a({
+    this.back = tag.a({
       text: 'Back',
       href: '../',
       classes: [styles.back, 'button'],
     });
-    back.addListener('click', linkHandler);
+    this.back.addListener('click', linkHandler);
 
-    const durationInput = tag.input({
+    this.durationInput = tag.input({
       type: 'number',
       min: '5',
       max: '100',
@@ -100,9 +135,9 @@ export default class PickerControls extends BaseComponent {
     const durationLabel = tag.label(
       { classes: [styles.duration, styles.label] },
       tag.span({ text: 'Duration:', classes: [styles.text] }),
-      durationInput
+      this.durationInput
     );
 
-    this.appendChildren(back, durationLabel);
+    this.appendChildren(this.back, durationLabel);
   }
 }
