@@ -11,6 +11,17 @@
     grid-area: back;
     color: palevioletred;
     text-align: center;
+
+    &.backDisabled {
+      pointer-events: none;
+      cursor: default;
+
+      border-style: dashed;
+
+      color: black;
+
+      background: none;
+    }
   }
 
   .label {
@@ -37,6 +48,10 @@
     &Input {
       max-inline-size: 4.5rem;
       padding-inline-end: 0.5rem;
+
+      &:disabled {
+        border-style: dashed;
+      }
     }
   }
 
@@ -45,6 +60,12 @@
     place-self: center center;
     block-size: 100%;
     background-color: antiquewhite;
+
+    &:has(:disabled) {
+      cursor: default;
+      border-style: dashed;
+      background: none;
+    }
 
     .text {
       line-height: 1.35;
@@ -59,5 +80,12 @@
     grid-area: pick;
     font-weight: 600;
     color: indigo;
+
+    &:disabled {
+      cursor: default;
+      border-style: dashed;
+      color: black;
+      background: none;
+    }
   }
 }
