@@ -21,7 +21,10 @@ export default class AudioController {
 
     this.machine.on(this.machine.events.machineStateChanged, ({ trigger }) => {
       if (trigger === 'pick') void this.play('pick');
-      else if (trigger === 'endPick') void this.play('end');
+      else if (trigger === 'endPick') {
+        this.pause('pick');
+        void this.play('end');
+      }
     });
   }
 
@@ -35,5 +38,10 @@ export default class AudioController {
     const audioElement = this.sounds[audioEvent].getElement();
     audioElement.currentTime = 0;
     await audioElement.play();
+  }
+
+  public pause(audioEvent: string): void {
+    const audioElement = this.sounds[audioEvent].getElement();
+    audioElement.pause();
   }
 }
