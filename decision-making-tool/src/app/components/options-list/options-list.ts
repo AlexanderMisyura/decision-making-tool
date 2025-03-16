@@ -42,9 +42,7 @@ export default class OptionsList extends BaseComponent {
     this.addListener('click', this.handleDeleteClick.bind(this));
     this.addListener('change', this.handleInputsChange.bind(this));
 
-    this.machine.on(this.machine.events.machineStateChanged, (payload) =>
-      this.handleStateChange(payload)
-    );
+    this.machine.on(this.machine.events.machineStateChanged, this.handleStateChange.bind(this));
   }
 
   private handleStateChange(payload: MachinePayload): void {
