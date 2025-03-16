@@ -2,11 +2,11 @@ import type { StateMachine } from '@state-machine/machine-class';
 
 import Audio from './audio';
 import end from './audio/end.mp3';
+import invitation from './audio/invitation.mp3';
 import pick from './audio/pick.mp3';
-import navigate from './audio/start.mp3';
 
 const AUDIO_EVENTS = {
-  navigate,
+  invitation,
   pick,
   end,
 };
@@ -20,24 +20,18 @@ export default class AudioController {
     }
 
     this.machine.on(this.machine.events.machineStateChanged, ({ trigger }) => {
-      const state = this.machine.value;
-      if (state === 'state:picker') {
-        void this.play('navigate');
-      } else if (trigger === 'pick') {
-        void this.play('pick');
-      } else if (trigger === 'endPick') {
-        void this.play('end');
-      }
+      if (trigger === 'pick') void this.play('pick');
+      else if (trigger === 'endPick') void this.play('end');
     });
   }
 
-  public toggleMute(value: boolean): void {
+  public toggleMute(isSoundEnabled: boolean): void {
     for (const sound of Object.values(this.sounds)) {
-      sound.getElement().muted = value;
+      sound.getElement().muted = !isSoundEnabled;
     }
   }
 
-  private async play(audioEvent: string): Promise<void> {
+  public async play(audioEvent: string): Promise<void> {
     const audioElement = this.sounds[audioEvent].getElement();
     audioElement.currentTime = 0;
     await audioElement.play();

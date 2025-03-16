@@ -8,6 +8,6 @@ export default class Audio extends BaseComponent<'audio'> {
     audioElement.src = path;
     audioElement.volume = 0.5;
     audioElement.preload = 'auto';
-    audioElement.muted = false;
+    audioElement.muted = true;
   }
 }
