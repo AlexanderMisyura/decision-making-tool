@@ -23,6 +23,10 @@ class Controller {
     return this.storageService.getData('preferences', parsePreferences);
   }
 
+  public setPreferences(preferences: Preferences): void {
+    this.storageService.saveData('preferences', preferences);
+  }
+
   public getOptions(): [Option[], number] {
     return [this.getOptionsList(), this.getLastOptionId()];
   }
