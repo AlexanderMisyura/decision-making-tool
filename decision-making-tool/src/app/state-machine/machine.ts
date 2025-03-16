@@ -175,7 +175,17 @@ const stateMachineDefinition: MachineDefinition = {
             }
           },
         },
-        toggleMute: {
+        toggleSound: {
+          target: 'state:picker',
+          action(payload) {
+            if (payload.contextData?.isSoundEnabled !== undefined) {
+              const isSoundEnabled = payload.contextData.isSoundEnabled;
+              payload.updateContext({ isSoundEnabled });
+              controller.setPreferences({ isSoundEnabled });
+            }
+          },
+        },
+        pick: {
           target: 'state:picker',
           action() {},
         },
