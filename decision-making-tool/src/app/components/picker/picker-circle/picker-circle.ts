@@ -60,6 +60,7 @@ export default class Circle extends BaseComponent<'canvas'> {
   private handleStateChange(payload: MachinePayload): void {
     const { trigger } = payload;
     if (trigger === 'navigatePicker') {
+      this.terminated = false;
       this.setDimensions();
       this.setPersistentParameters();
 
