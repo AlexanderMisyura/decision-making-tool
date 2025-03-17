@@ -1,4 +1,5 @@
 import BaseComponent from '@components/base-component';
+import type Page from '@components/page/page';
 import tag from '@components/utility-components';
 import type { StateMachine } from '@state-machine/machine-class';
 import type Router from 'src/app/router';
@@ -11,11 +12,12 @@ export default class Picker extends BaseComponent {
   private optionTitle: BaseComponent;
   constructor(
     private machine: StateMachine,
-    linkHandler: Router['handleLink']
+    linkHandler: Router['handleLink'],
+    showMessage: Page['showMessage']
   ) {
     super({ elementTag: 'div', classes: [styles.pickerBlock] });
 
-    const controls = new PickerControls(this.machine, linkHandler);
+    const controls = new PickerControls(this.machine, linkHandler, showMessage);
     const circle = new Circle(this.machine, this.showTitle.bind(this));
     this.optionTitle = tag.div({ classes: [styles.title], text: 'Spin the Wheel !!!' });
 

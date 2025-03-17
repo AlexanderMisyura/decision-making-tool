@@ -1,5 +1,6 @@
 import AudioController from '@components/audioComponent/audio-controller';
 import BaseComponent from '@components/base-component';
+import type Page from '@components/page/page';
 import tag from '@components/utility-components';
 import type { StateMachine } from '@state-machine/machine-class';
 import type { MachinePayload } from '@ts-types/index';
@@ -19,7 +20,8 @@ export default class PickerControls extends BaseComponent {
 
   constructor(
     private machine: StateMachine,
-    linkHandler: Router['handleLink']
+    linkHandler: Router['handleLink'],
+    private showMessage: Page['showMessage']
   ) {
     super({ elementTag: 'div', classes: [styles.controls] });
 
@@ -53,8 +55,14 @@ export default class PickerControls extends BaseComponent {
   }
 
   private startPick(): void {
-    this.disableControls();
-    this.machine.makeTransition(this.machine.value, 'pick');
+    const isInputValid = this.durationInput?.getElement().checkValidity();
+
+    if (isInputValid) {
+      this.disableControls();
+      this.machine.makeTransition(this.machine.value, 'pick');
+    } else {
+      this.showMessage('invalidDurationInput');
+    }
   }
 
   private disableControls(): void {

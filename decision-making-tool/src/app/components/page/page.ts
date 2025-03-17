@@ -31,7 +31,7 @@ export default class Page extends BaseComponent<'main'> {
       linkHandler,
       this.showMessage.bind(this)
     );
-    this.picker = new Picker(machine, linkHandler);
+    this.picker = new Picker(machine, linkHandler, this.showMessage.bind(this));
     this.errorPage = new ErrorPage(linkHandler);
 
     this.content = tag.div({ classes: [styles.content] });

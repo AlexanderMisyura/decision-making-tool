@@ -1,1 +1,1 @@
-export type ErrorMessageType = 'noValidOptions' | 'invalidFile';
+export type ErrorMessageType = 'noValidOptions' | 'invalidFile' | 'invalidDurationInput';
