@@ -20,16 +20,32 @@ export default class AudioController {
     }
 
     this.machine.on(this.machine.events.machineStateChanged, ({ trigger }) => {
-      if (trigger === 'pick') void this.play('pick');
-      else if (trigger === 'endPick') {
-        this.pause('pick');
-        void this.play('end');
+      switch (trigger) {
+        case 'pick': {
+          void this.play('pick');
+          break;
+        }
+        case 'endPick': {
+          this.pause('pick');
+          void this.play('end');
+
+          break;
+        }
+        case 'navigateOptionsList':
+        case 'navigateError': {
+          for (const sound of Object.values(this.sounds)) {
+            sound.getElement().pause();
+          }
+
+          break;
+        }
       }
     });
   }
 
   public toggleMute(isSoundEnabled: boolean): void {
     for (const sound of Object.values(this.sounds)) {
+      sound.getElement().pause();
       sound.getElement().muted = !isSoundEnabled;
     }
   }
