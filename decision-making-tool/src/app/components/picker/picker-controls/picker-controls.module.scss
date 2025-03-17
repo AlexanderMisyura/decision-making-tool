@@ -5,7 +5,7 @@
     'pick   pick     pick   pick' auto
     / 1fr 1fr 1fr 1fr;
   gap: 1rem 0.5rem;
-  inline-size: 300px;
+  max-inline-size: 300px;
 
   .back {
     grid-area: back;

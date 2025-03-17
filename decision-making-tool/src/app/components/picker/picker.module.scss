@@ -10,7 +10,10 @@
   padding: 0.5rem;
 
   .title {
-    inline-size: 300px;
+    user-select: none;
+
+    inline-size: 100%;
+    max-inline-size: 300px;
     padding-block: 0.8rem;
     padding-inline: 1rem;
     border: 1px dashed olive;
