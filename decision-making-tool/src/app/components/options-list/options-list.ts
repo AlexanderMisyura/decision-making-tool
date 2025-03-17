@@ -69,7 +69,9 @@ export default class OptionsList extends BaseComponent {
       this.list.appendSingle(optionItem);
     }
 
-    this.fixOptionsIdColumn(this.list.childComponents.at(-1));
+    setTimeout(() => {
+      this.fixOptionsIdColumn(this.list.childComponents.at(-1));
+    }, 0);
   }
 
   private fixOptionsIdColumn(
@@ -80,6 +82,7 @@ export default class OptionsList extends BaseComponent {
         const width = listLastChild.label.getElement().offsetWidth;
         if (option instanceof OptionItem) {
           const optionWidth = option.label.getElement().offsetWidth;
+
           if (optionWidth !== width) option.label.getElement().style.minWidth = `${width}px`;
         }
       }
