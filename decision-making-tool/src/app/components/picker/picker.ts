@@ -2,6 +2,7 @@ import BaseComponent from '@components/base-component';
 import type Page from '@components/page/page';
 import tag from '@components/utility-components';
 import type { StateMachine } from '@state-machine/machine-class';
+import type { MachinePayload } from '@ts-types/index';
 import type Router from 'src/app/router';
 
 import * as styles from './picker.module.scss';
@@ -23,14 +24,26 @@ export default class Picker extends BaseComponent {
 
     this.appendChildren(controls, this.optionTitle, circle);
 
-    this.machine.on(this.machine.events.machineStateChanged, (payload) => {
-      if (payload.trigger === 'navigatePicker') {
-        this.optionTitle.setText('Spin the Wheel !!!');
-      }
-    });
+    this.machine.on(this.machine.events.machineStateChanged, this.handleStateChanged.bind(this));
   }
 
   private showTitle(title: string): void {
     this.optionTitle.setText(title);
+  }
+
+  private handleStateChanged(payload: MachinePayload): void {
+    const { trigger } = payload;
+
+    if (trigger === 'navigatePicker') {
+      this.optionTitle.setText('Spin the Wheel !!!');
+    }
+
+    if (trigger === 'endPick') {
+      this.optionTitle.getElement().classList.add(styles.picked);
+    }
+
+    if (trigger === 'pick' || trigger === 'navigateOptionsList' || trigger === 'navigateError') {
+      this.optionTitle.getElement().classList.remove(styles.picked);
+    }
   }
 }
