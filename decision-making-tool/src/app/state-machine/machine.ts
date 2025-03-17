@@ -141,11 +141,17 @@ const stateMachineDefinition: MachineDefinition = {
                 updateContext({ options: fileContent.options, lastId: fileContent.lastId });
                 controller.setOptions([fileContent.options, fileContent.lastId]);
                 machine.makeTransition(machine.value, 'fileLoaded');
+              } else {
+                machine.makeTransition(machine.value, 'invalidFile');
               }
             })();
           },
         },
         fileLoaded: {
+          target: 'state:optionsList',
+          action() {},
+        },
+        invalidFile: {
           target: 'state:optionsList',
           action() {},
         },
