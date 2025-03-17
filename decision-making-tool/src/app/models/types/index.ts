@@ -5,6 +5,7 @@ export type { MachineDefinition } from './machine-definition';
 export type { MachinePayload } from './machine-payload';
 export type { Option } from './option';
 export type { PasteListOption } from './paste-list-option';
+export type { PickerSector } from './picker-sector';
 export type { Preferences } from './preferences';
 export type { RouteObject } from './route-object';
 export type { StateDefinition } from './state-definition';
