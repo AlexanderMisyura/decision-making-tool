@@ -1,5 +1,6 @@
 export type { Context } from './context';
 export type { ControlsCallbacks } from './controls-callbacks';
+export type { ErrorMessageType } from './error-message';
 export type { FileContent } from './file-content';
 export type { MachineDefinition } from './machine-definition';
 export type { MachinePayload } from './machine-payload';
