@@ -55,13 +55,6 @@ export default class PickerControls extends BaseComponent {
   private startPick(): void {
     this.disableControls();
     this.machine.makeTransition(this.machine.value, 'pick');
-
-    const durationMs = this.machine.context.durationMs;
-
-    setTimeout(() => {
-      this.enableControls();
-      this.machine.makeTransition(this.machine.value, 'endPick');
-    }, durationMs);
   }
 
   private disableControls(): void {
@@ -85,12 +78,17 @@ export default class PickerControls extends BaseComponent {
   }
 
   private handleStateChange(payload: MachinePayload): void {
-    if (payload.trigger === 'navigatePicker') {
+    const { trigger } = payload;
+    if (trigger === 'navigatePicker') {
       const { isSoundEnabled } = this.machine.context;
 
       this.soundCheckBox.getElement().checked = isSoundEnabled;
       this.soundText.setText(isSoundEnabled ? SOUND.ON : SOUND.OFF);
       this.audioController.toggleMute(isSoundEnabled);
+    }
+
+    if (trigger === 'endPick' || trigger === 'navigateOptionsList' || trigger === 'navigateError') {
+      this.enableControls();
     }
   }
 
