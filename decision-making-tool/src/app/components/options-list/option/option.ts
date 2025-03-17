@@ -28,7 +28,7 @@ export default class OptionItem extends BaseComponent<'li'> {
       placeholder: 'Weight',
       type: 'number',
       name: 'weight',
-      min: '1',
+      min: '0',
       id: `#${id}-weight`,
       classes: [styles.weight, 'input'],
     });
