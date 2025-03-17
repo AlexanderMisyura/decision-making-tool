@@ -6,6 +6,7 @@ import OptionsList from '@components/options-list/options-list';
 import Picker from '@components/picker/picker';
 import tag from '@components/utility-components';
 import type { StateMachine } from '@state-machine/machine-class';
+import type { ErrorMessageType } from '@ts-types/index';
 import type Router from 'src/app/router';
 
 import * as styles from './page.module.scss';
@@ -43,8 +44,8 @@ export default class Page extends BaseComponent<'main'> {
     document.body.append(this.getElement());
   }
 
-  public showMessage(): void {
-    this.modal.showModal(new Message(this.modal.modalControls));
+  public showMessage(messageType: ErrorMessageType): void {
+    this.modal.showModal(new Message(this.modal.modalControls, messageType));
   }
 
   private handleRouteChange(): void {

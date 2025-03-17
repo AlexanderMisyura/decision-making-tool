@@ -39,7 +39,7 @@ export default class App {
             });
           } else {
             this.router.navigate(globalThis.location.origin + BASE_PATH);
-            this.page.showMessage();
+            this.page.showMessage('noValidOptions');
           }
         },
       },
