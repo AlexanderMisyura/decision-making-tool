@@ -12,105 +12,109 @@ import webpack from 'webpack';
 const BASE_PATH = '/alexandermisyura-JSFE2024Q4/decision-making-tool/';
 const { dirname } = import.meta;
 
-const config = (isDevelopment: boolean): webpack.Configuration => ({
-  entry: path.resolve(import.meta.dirname, './src/index.ts'),
-  devtool: 'source-map',
-  mode: isDevelopment ? 'development' : 'production',
+const config = (environment: { production?: boolean }): webpack.Configuration => {
+  const isDevelopment = !environment.production;
 
-  devServer: {
-    historyApiFallback: true,
-    client: { overlay: { warnings: false } },
-  },
+  return {
+    entry: path.resolve(dirname, './src/index.ts'),
+    devtool: 'source-map',
+    mode: isDevelopment ? 'development' : 'production',
 
-  optimization: {
-    minimize: false,
-  },
+    devServer: {
+      historyApiFallback: true,
+      client: { overlay: { warnings: false } },
+    },
 
-  resolve: {
-    extensions: ['.ts', '.js'],
-    plugins: [new TsconfigPathsPlugin()],
-  },
+    optimization: {
+      minimize: false,
+    },
 
-  output: {
-    filename: 'index.js',
-    path: path.resolve(dirname, './dist'),
-    assetModuleFilename: 'assets[name][est][query]',
-    clean: true,
-  },
+    resolve: {
+      extensions: ['.ts', '.js'],
+      plugins: [new TsconfigPathsPlugin()],
+    },
 
-  module: {
-    rules: [
-      {
-        test: /\.(?:wav|mp3)$/i,
-        type: 'asset/resource',
-        generator: {
-          filename: 'assets/audio/[hash][ext][query]',
-        },
-      },
-      {
-        test: /\.(?:ico|gif|png|jpg|jpeg|svg)$/i,
-        type: 'asset/resource',
-        generator: {
-          filename: 'assets/img/[hash][ext][query]',
-        },
-      },
-      {
-        test: /\.woff2$/i,
-        type: 'asset/resource',
-        generator: {
-          filename: 'assets/fonts/[hash][ext][query]',
-        },
-      },
-      {
-        test: /\.(sa|sc|c)ss$/,
-        exclude: /\.module\.(sa|sc|c)ss$/,
-        use: [
-          MiniCssExtractPlugin.loader,
-          {
-            loader: 'css-loader',
-            options: { sourceMap: true },
+    output: {
+      filename: 'index.js',
+      path: path.resolve(dirname, './dist'),
+      assetModuleFilename: 'assets[name][est][query]',
+      clean: true,
+    },
+
+    module: {
+      rules: [
+        {
+          test: /\.(?:wav|mp3)$/i,
+          type: 'asset/resource',
+          generator: {
+            filename: 'assets/audio/[hash][ext][query]',
           },
-          {
-            loader: 'sass-loader',
-            options: { sourceMap: true },
+        },
+        {
+          test: /\.(?:ico|gif|png|jpg|jpeg|svg)$/i,
+          type: 'asset/resource',
+          generator: {
+            filename: 'assets/img/[hash][ext][query]',
           },
-        ],
-      },
-      {
-        test: /\.module\.(sa|sc|c)ss$/,
-        use: [
-          MiniCssExtractPlugin.loader,
-          {
-            loader: 'css-loader',
-            options: {
-              sourceMap: true,
-              modules: {
-                exportLocalsConvention: 'camel-case-only',
-                localIdentName: isDevelopment ? '[local]_[hash:base64:8]' : '[hash:base64:8]',
+        },
+        {
+          test: /\.woff2$/i,
+          type: 'asset/resource',
+          generator: {
+            filename: 'assets/fonts/[hash][ext][query]',
+          },
+        },
+        {
+          test: /\.(sa|sc|c)ss$/,
+          exclude: /\.module\.(sa|sc|c)ss$/,
+          use: [
+            MiniCssExtractPlugin.loader,
+            {
+              loader: 'css-loader',
+              options: { sourceMap: true },
+            },
+            {
+              loader: 'sass-loader',
+              options: { sourceMap: true },
+            },
+          ],
+        },
+        {
+          test: /\.module\.(sa|sc|c)ss$/,
+          use: [
+            MiniCssExtractPlugin.loader,
+            {
+              loader: 'css-loader',
+              options: {
+                sourceMap: true,
+                modules: {
+                  exportLocalsConvention: 'camel-case-only',
+                  localIdentName: isDevelopment ? '[local]_[hash:base64:8]' : '[hash:base64:8]',
+                },
               },
             },
-          },
-          {
-            loader: 'sass-loader',
-            options: { sourceMap: true },
-          },
-        ],
-      },
-      { test: /\.ts$/i, use: 'ts-loader' },
-    ],
-  },
+            {
+              loader: 'sass-loader',
+              options: { sourceMap: true },
+            },
+          ],
+        },
+        { test: /\.ts$/i, use: 'ts-loader' },
+      ],
+    },
 
-  plugins: [
-    new HtmlWebpackPlugin({
-      title: 'Decision making tool',
-      filename: 'index.html',
-      favicon: './public/favicon.ico',
-    }),
-    new MiniCssExtractPlugin({ filename: '[name].[contenthash].css' }),
-    new EslintPlugin({ configType: 'flat', extensions: 'ts' }),
-    new StylelintPlugin(),
-    new webpack.DefinePlugin({ BASE_PATH: JSON.stringify(isDevelopment ? '/' : BASE_PATH) }),
-  ],
-});
+    plugins: [
+      new HtmlWebpackPlugin({
+        title: 'Decision making tool',
+        filename: 'index.html',
+        favicon: './public/favicon.ico',
+      }),
+      new MiniCssExtractPlugin({ filename: '[name].[contenthash].css' }),
+      new EslintPlugin({ configType: 'flat', extensions: 'ts' }),
+      new StylelintPlugin(),
+      new webpack.DefinePlugin({ BASE_PATH: JSON.stringify(isDevelopment ? '/' : BASE_PATH) }),
+    ],
+  };
+};
 
 export default config;

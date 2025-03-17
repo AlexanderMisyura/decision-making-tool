@@ -11,7 +11,7 @@
     "lint:fix": "eslint --fix",
     "stylelint": "stylelint \"**/*.scss\"",
     "deploy": "npm run build && npx gh-pages -d dist -e decision-making-tool",
-    "build": "webpack",
+    "build": "webpack --env production",
     "dev": "webpack serve --env development"
   },
   "keywords": [],
