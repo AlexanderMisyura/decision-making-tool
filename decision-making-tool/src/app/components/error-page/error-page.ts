@@ -10,10 +10,13 @@ export default class ErrorPage extends BaseComponent {
     const backLink = tag.a({
       text: 'Go back to Options List',
       href: '../',
-      classes: [styles.link],
+      classes: [styles.link, 'button'],
     });
     backLink.addListener('click', linkHandler);
 
-    this.appendChildren(tag.div({ text: 'Oh, something went wrong 😕' }), backLink);
+    this.appendChildren(
+      tag.div({ text: 'Oh, something went wrong 😕', classes: [styles.text] }),
+      backLink
+    );
   }
 }
