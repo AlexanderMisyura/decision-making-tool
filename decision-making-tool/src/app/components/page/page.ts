@@ -25,7 +25,12 @@ export default class Page extends BaseComponent<'main'> {
     super({ elementTag: 'main', classes: [styles.page] });
 
     this.modal = new Modal();
-    this.optionsList = new OptionsList(machine, this.modal.modalControls, linkHandler);
+    this.optionsList = new OptionsList(
+      machine,
+      this.modal.modalControls,
+      linkHandler,
+      this.showMessage.bind(this)
+    );
     this.picker = new Picker(machine, linkHandler);
     this.errorPage = new ErrorPage(linkHandler);
 

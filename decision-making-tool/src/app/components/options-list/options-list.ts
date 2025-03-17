@@ -2,6 +2,7 @@ import BaseComponent from '@components/base-component';
 import type Modal from '@components/modal/modal';
 import OptionItem from '@components/options-list/option/option';
 import Controls from '@components/options-list/options-controls/options-controls';
+import type Page from '@components/page/page';
 import PasteList from '@components/pasteOption/paste-list';
 import tag from '@components/utility-components';
 import type { StateMachine } from '@state-machine/machine-class';
@@ -17,7 +18,8 @@ export default class OptionsList extends BaseComponent {
   constructor(
     private machine: StateMachine,
     modalControls: Modal['modalControls'],
-    linkHandler: Router['handleLink']
+    linkHandler: Router['handleLink'],
+    private showMessage: Page['showMessage']
   ) {
     super({ elementTag: 'div', classes: [styles.mainBlock] });
 
@@ -46,21 +48,25 @@ export default class OptionsList extends BaseComponent {
   }
 
   private handleStateChange(payload: MachinePayload): void {
-    if (payload.trigger === 'navigateOptionsList' || payload.trigger === 'fileLoaded') {
+    const { trigger } = payload;
+    if (trigger === 'navigateOptionsList' || trigger === 'fileLoaded') {
       this.rerenderList();
+    }
+
+    if (trigger === 'invalidFile') {
+      this.showMessage('invalidFile');
     }
   }
 
   private rerenderList(): void {
     const { options, lastId } = this.machine.context;
 
-    if (options.length > 0) {
-      this.list.removeChildren();
-      this.lastId = lastId;
-      for (const option of options) {
-        const optionItem = new OptionItem(option);
-        this.list.appendSingle(optionItem);
-      }
+    this.list.removeChildren();
+    this.lastId = lastId;
+
+    for (const option of options) {
+      const optionItem = new OptionItem(option);
+      this.list.appendSingle(optionItem);
     }
 
     this.fixOptionsIdColumn(this.list.childComponents.at(-1));
