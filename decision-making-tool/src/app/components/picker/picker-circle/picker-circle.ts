@@ -29,6 +29,7 @@ function getRandomDarkColor(): string {
 export default class Circle extends BaseComponent<'canvas'> {
   private durationMs: number = 10_000;
   private lineColor: string = '';
+  private centerColor: string = '';
   private circleUnfold: { title: string; color: string; angle: number }[] = [];
   private side: number = 0;
   private radius: number = 0;
@@ -106,6 +107,7 @@ export default class Circle extends BaseComponent<'canvas'> {
   private setPersistentParameters(): void {
     this.pickerList = shuffle(this.machine.context.pickerList);
     this.lineColor = getRandomDarkColor();
+    this.centerColor = getRandomDarkColor();
     this.sectors = [];
     this.circleUnfold = [];
     let totalWeight = 0;
@@ -181,10 +183,6 @@ export default class Circle extends BaseComponent<'canvas'> {
 
   private drawWheel(initialAngle: number): void {
     if (this.ctx) {
-      // this.ctx.beginPath();
-      // this.ctx.lineWidth = 3;
-      // this.ctx.strokeStyle = this.lineColor;
-      // this.ctx.lineTo(this.center, this.center);
       let startAngleRad = initialAngle;
       for (let index = 0; index < this.sectors.length; index++) {
         this.drawSector(this.sectors[index], startAngleRad);
@@ -243,10 +241,9 @@ export default class Circle extends BaseComponent<'canvas'> {
   private drawCentralCircle(): void {
     if (this.ctx) {
       this.ctx.beginPath();
-      // this.ctx.strokeStyle = this.lineColor;
       this.ctx.arc(this.side / 2, this.side / 2, this.centralCircleRadius, 0, 2 * Math.PI);
-      this.ctx.fillStyle = this.lineColor;
-      // this.ctx.stroke();
+      this.ctx.fillStyle = this.centerColor;
+      this.ctx.stroke();
       this.ctx.fill();
     }
   }
