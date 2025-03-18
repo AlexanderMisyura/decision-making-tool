@@ -211,6 +211,8 @@ export default class Circle extends BaseComponent<'canvas'> {
   }
 
   private drawOptionTitle(sector: PickerSector, startAngleRad: number): void {
+    if (sector.angleRad < 0.25) return;
+
     if (this.ctx) {
       this.ctx.save();
 
@@ -220,15 +222,14 @@ export default class Circle extends BaseComponent<'canvas'> {
 
       this.ctx.textAlign = 'center';
       this.ctx.textBaseline = 'middle';
-      this.ctx.font = 'bold 16px sans-serif';
+      this.ctx.font = 'bold 16px monospace';
       this.ctx.fillStyle = 'black';
 
       let title: string;
-      if (sector.title.length <= 16) {
+      if (sector.title.length <= 14) {
         ({ title } = sector);
       } else {
-        this.ctx.font = '16px sans-serif';
-        title = `${sector.title.slice(0, 15)}...`;
+        title = `${sector.title.slice(0, 12)}…`;
       }
 
       const textCenterRadius =
