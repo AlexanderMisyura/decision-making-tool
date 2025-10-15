@@ -6,7 +6,7 @@ function getCurrentHref(): string {
 }
 
 function getCurrentPathname(): string {
-  return globalThis.location.pathname.replace(BASE_PATH, '/');
+  return globalThis.location.pathname;
 }
 
 export default class Router {
@@ -32,12 +32,10 @@ export default class Router {
   }
 
   public navigate(href: string): void {
-    const url = new URL(href);
+    const url = new URL(href, globalThis.location.origin);
     globalThis.history.pushState({}, '', url);
 
-    const pathname = BASE_PATH ? url.pathname.replace(BASE_PATH, '/') : url.pathname;
-
-    this.load(pathname);
+    this.load(url.pathname);
   }
 
   private load(pathname: string): void {

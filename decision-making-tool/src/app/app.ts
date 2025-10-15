@@ -38,7 +38,7 @@ export default class App {
               currentRoute: '/picker',
             });
           } else {
-            this.router.navigate(globalThis.location.origin + BASE_PATH);
+            this.router.navigate('/');
             this.page.showMessage('noValidOptions');
           }
         },

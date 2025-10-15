@@ -7,9 +7,8 @@ import HtmlWebpackPlugin from 'html-webpack-plugin';
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 import StylelintPlugin from 'stylelint-webpack-plugin';
 import { TsconfigPathsPlugin } from 'tsconfig-paths-webpack-plugin';
-import webpack from 'webpack';
+import type webpack from 'webpack';
 
-const BASE_PATH = '/alexandermisyura-JSFE2024Q4/decision-making-tool/';
 const { dirname } = import.meta;
 
 const config = (environment: { production?: boolean }): webpack.Configuration => {
@@ -37,7 +36,7 @@ const config = (environment: { production?: boolean }): webpack.Configuration =>
     output: {
       filename: 'index.js',
       path: path.resolve(dirname, './dist'),
-      assetModuleFilename: 'assets[name][est][query]',
+      assetModuleFilename: 'assets[name][ext][query]',
       clean: true,
     },
 
@@ -112,7 +111,6 @@ const config = (environment: { production?: boolean }): webpack.Configuration =>
       new MiniCssExtractPlugin({ filename: '[name].[contenthash].css' }),
       new EslintPlugin({ configType: 'flat', extensions: 'ts' }),
       new StylelintPlugin(),
-      new webpack.DefinePlugin({ BASE_PATH: JSON.stringify(isDevelopment ? '/' : BASE_PATH) }),
     ],
   };
 };
