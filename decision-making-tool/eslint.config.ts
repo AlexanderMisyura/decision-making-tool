@@ -32,11 +32,6 @@ export default tseslint.config(
   eslintPluginUnicorn.configs.recommended,
 
   {
-    files: ['eslint.config.ts'],
-    extends: [tseslint.configs.disableTypeChecked],
-  },
-
-  {
     settings: {
       'import/resolver': {
         typescript: true,
